@@ -2,6 +2,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from .configs import RootConfig, DataConfig
 from cstgs import number_of_triangles
 from typing import List, Tuple
+from datetime import datetime
 from pathlib import Path
 from sys import exit
 import polars as pl
@@ -11,17 +12,12 @@ import re
 class Pipe:
     def __init__(self, data_dir: Path) -> None:
         try:
+            self.__data_dir = data_dir
             self.__root_config = RootConfig.load(data_dir)
             self.__triangles: List[Triangles] = [
                 Triangles(dataset_dir) for dataset_dir in self.__root_config.folders
             ]
-            self.__stats: pl.DataFrame = pl.DataFrame({
-                "index": pl.Series(
-                    [], 
-                    dtype=pl.Struct({"folder_name": pl.String, "file_name": pl.String})
-                ),
-                "processing_duration": pl.Series([], dtype=pl.Float64)
-            })
+            self.__stats: pl.DataFrame = None
             self.__is_ran = False
         except KeyboardInterrupt:
             print("Process interrupted, shutting down...")
@@ -37,8 +33,7 @@ class Pipe:
         return self.__stats
             
     def run(self, processors: int, edge_sampling_prob: float, wedge_sampling_prob: float) -> pl.DataFrame:
-        all_index_data = []
-        all_durations = []
+        records: pl.DataFrame = None
         try:
             with ProcessPoolExecutor() as executor:
                 futures = [
@@ -48,9 +43,11 @@ class Pipe:
                 ]
                 for future in as_completed(futures):
                     try:
-                        dataset_name, records = future.result()
-                        all_index_data.extend([{"dataset": dataset_name, "record_name": record} for record in records.keys()])
-                        all_durations.extend(records.values())
+                        recs: pl.DataFrame = future.result()
+                        if records is None:
+                            records = recs
+                        else:
+                            records = pl.concat([records, recs], how="vertical")
                     except Exception as e:
                         print(f"Error occurred: {e}")
                         exit(1)
@@ -58,10 +55,8 @@ class Pipe:
             print("Process interrupted, shutting down...")
             exit(1)
         self.__is_ran = True
-        self.__stats = pl.DataFrame({
-            "index": pl.Series(all_index_data, dtype=pl.Struct({"dataset": pl.String, "record_name": pl.String})),
-            "processing_duration": pl.Series(all_durations, dtype=pl.Float64)
-        })
+        self.__stats = records.sort("process_took_", descending=False).drop("process_took_")
+        self.__stats.write_csv(self.__data_dir / "results.csv")
         return self.__stats
 
     
@@ -116,10 +111,22 @@ class Triangles:
                             proc_file.close()
                             raise ValueError(f"{self.data_config.name}::{file_path.name} does not match on line {i+1}.")
                         proc_file.write(f"{match.group(1)}\t{match.group(2)}\n")
+                        
+    def _format_time(self, microseconds: int) -> str:
+        if microseconds < 1000:
+            return f"{microseconds}μs"
+        elif microseconds < 1000000:
+            return f"{microseconds / 1000:.2f}ms"
+        elif microseconds < 60000000:
+            return f"{microseconds / 1000000:.2f}s"
+        else:
+            return f"{microseconds / 60000000:.2f}m"
 
-    def run(self, processors: int, edge_sampling_prob: float, wedge_sampling_prob: float) -> Tuple[str, dict[str, int]]:
+    def run(self, processors: int, edge_sampling_prob: float, wedge_sampling_prob: float) -> pl.DataFrame:
         file_paths = [file_path for file_path in self.data_config.folders.processed.glob("*.tsv")]
-        reses: dict[str, int] = {}
+        all_index_data = []
+        all_triangles = []
+        all_durations = []
         try:
             with ProcessPoolExecutor() as executor:
                 futures = [
@@ -128,7 +135,9 @@ class Triangles:
                 for future in as_completed(futures):
                     try:
                         res = future.result()
-                        reses[res[0].name] = res[1]
+                        all_index_data.append(f"{self.data_config.name}::{res[0].name}")
+                        all_triangles.append(res[1])
+                        all_durations.append(res[2])
                     except Exception as e:
                         raise e
                         print(f"Error occurred: {e}")
@@ -136,7 +145,18 @@ class Triangles:
         except KeyboardInterrupt:
             print("Process interrupted, shutting down...")
             exit(1)
-        return self.data_config.name, reses
+        records = pl.DataFrame({
+            "dataset": all_index_data,
+            "triangles": all_triangles,
+            "process_took_": all_durations
+        }).with_columns(
+            pl.col("process_took_").map_elements(self._format_time, return_dtype=pl.Utf8).alias("process_took")
+        ).sort("process_took_", descending=False)
+        records.drop("process_took_").write_csv(self.data_config.folders.statistics / "results.csv")
+        return records
 
-    def _run(self, file_path: Path, processors: int, edge_sampling_prob: float, wedge_sampling_prob: float) -> Tuple[Path, int]:
-        return file_path, number_of_triangles(str(file_path), processors, edge_sampling_prob, wedge_sampling_prob)
+    def _run(self, file_path: Path, processors: int, edge_sampling_prob: float, wedge_sampling_prob: float) -> Tuple[Path, int, float]:
+        now = datetime.now()
+        res = number_of_triangles(str(file_path), processors, edge_sampling_prob, wedge_sampling_prob)
+        elapsed = (datetime.now() - now).total_seconds() * 1000000
+        return file_path, res, elapsed

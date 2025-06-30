@@ -85,7 +85,6 @@ class DataConfigFormat(BaseModel):
     regex_ignore: str
     regex_find: str
     skip_first_not_ignore: bool
-    
 
     @field_validator("extensions")
     @classmethod

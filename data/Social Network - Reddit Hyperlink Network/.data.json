@@ -1,5 +1,5 @@
 {
-    "name": "Reddit Hyperlink Network",
+    "name": "Reddit",
     "folders": {
         "raw": "1-raw",
         "processed": "2-processed",

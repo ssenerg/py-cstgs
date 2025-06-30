@@ -1,6 +1,8 @@
 from argparse import ArgumentParser
 from python import Triangles
 from pathlib import Path
+import polars as pl
+
 
 
 if __name__ == "__main__":
@@ -32,9 +34,11 @@ if __name__ == "__main__":
         default=0.8
     )
     args = parser.parse_args()
-    t = Triangles(Path(args.data_dir)).run(
+    t: pl.DataFrame = Triangles(Path(args.data_dir)).run(
         args.processors,
         args.e__edge_sampling_prob,
         args.w__wedge_sampling_prob
     )
+    pl.Config.set_tbl_rows(-1)
+    print(t)
 

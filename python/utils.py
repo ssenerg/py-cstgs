@@ -8,7 +8,6 @@ UNITS = {
     "minute": "m",
     "hour": "h"
 }
-
 COLOR = "\033[31m"
 RESET = "\033[0m"
 
