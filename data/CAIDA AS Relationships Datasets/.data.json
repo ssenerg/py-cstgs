@@ -1,0 +1,14 @@
+{
+    "name": "Caida",
+    "folders": {
+        "raw": "1-raw",
+        "processed": "2-processed",
+        "statistics": "3-statistics"
+    },
+    "format": {
+        "extensions": ".txt",
+        "regex_ignore": "^#.*\\n",
+        "regex_find": "^(\\d+)\\t(\\d+).*\\n",
+        "skip_first_not_ignore": false
+    }
+}

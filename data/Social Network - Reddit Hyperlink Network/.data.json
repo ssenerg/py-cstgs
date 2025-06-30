@@ -1,0 +1,14 @@
+{
+    "name": "Reddit Hyperlink Network",
+    "folders": {
+        "raw": "1-raw",
+        "processed": "2-processed",
+        "statistics": "3-statistics"
+    },
+    "format": {
+        "extensions": ".tsv",
+        "regex_ignore": "",
+        "regex_find": "^([^\\s\\t]*)\\t([^\\s\\t]*).*\\n",
+        "skip_first_not_ignore": true
+    }
+}
