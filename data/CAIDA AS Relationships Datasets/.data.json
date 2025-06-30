@@ -10,5 +10,9 @@
         "regex_ignore": "^#.*\\n",
         "regex_find": "^(\\d+)\\t(\\d+).*\\n",
         "skip_first_not_ignore": false
+    },
+    "known_triangle_counts": {
+        "as-caida20060102": 30433,
+        "as-caida20070101": 40475
     }
 }

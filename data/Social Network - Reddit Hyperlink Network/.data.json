@@ -10,5 +10,8 @@
         "regex_ignore": "",
         "regex_find": "^([^\\s\\t]*)\\t([^\\s\\t]*).*\\n",
         "skip_first_not_ignore": true
+    },
+    "known_triangle_counts": {
+        "soc-redditHyperlinks-body": 406391
     }
 }

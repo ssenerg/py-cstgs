@@ -4,7 +4,6 @@ from pathlib import Path
 import polars as pl
 
 
-
 if __name__ == "__main__":
     parser = ArgumentParser(
         description="Counting and Sampling Triangles from a Graph Stream"
@@ -19,7 +18,7 @@ if __name__ == "__main__":
         "-p", "--processors",
         type=int,
         help="Number of processors to use",
-        default=12
+        default=20
     )
     parser.add_argument(
         "-e" "--edge-sampling-prob",
@@ -34,11 +33,15 @@ if __name__ == "__main__":
         default=0.8
     )
     args = parser.parse_args()
-    t: pl.DataFrame = Triangles(Path(args.data_dir)).run(
+    res, unknown_res = Triangles(Path(args.data_dir)).run(
         args.processors,
         args.e__edge_sampling_prob,
         args.w__wedge_sampling_prob
     )
     pl.Config.set_tbl_rows(-1)
-    print(t)
-
+    print(
+        "\033[1m::All Results::\033[0m\n\n", 
+        res, 
+        "\n\n\033[1m::Known Results::\033[0m\n\n", 
+        unknown_res
+    )

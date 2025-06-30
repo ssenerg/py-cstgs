@@ -1,7 +1,7 @@
-from pydantic import BaseModel, field_validator, ValidationInfo
+from pydantic import BaseModel, field_validator, ValidationInfo, model_validator
 from re import compile, error
+from typing import List, Dict
 from pathlib import Path
-from typing import List
 from os import makedirs
 from json import load
 
@@ -122,6 +122,7 @@ class DataConfig(BaseModel):
     name: str
     folders: DataConfigFolders
     format: DataConfigFormat
+    known_triangle_counts: Dict[str, int]
 
     @field_validator("name")
     @classmethod
@@ -129,6 +130,20 @@ class DataConfig(BaseModel):
         if not name:
             raise ValueError("Name cannot be empty")
         return name
+
+    @model_validator(mode="after")
+    def validate_known_triangle_counts(self) -> "DataConfig":
+        raw_folder = self.folders.raw
+        extension = self.format.extensions
+
+        for dataset_name, count in self.known_triangle_counts.items():
+            if count < 0:
+                raise ValueError(f"Triangle count for {dataset_name} must be non-negative")
+            
+            dataset_file = raw_folder / f"{dataset_name}{extension}"
+            if not dataset_file.exists():
+                raise ValueError(f"Dataset file not found for {dataset_name}: \"{dataset_file}\"")
+        return self
 
     @classmethod
     def load(cls, dataset_dir: Path) -> "DataConfig":

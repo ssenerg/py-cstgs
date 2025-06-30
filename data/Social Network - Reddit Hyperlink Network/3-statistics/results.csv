@@ -1,3 +1,3 @@
 dataset,triangles,process_took
-Reddit::soc-redditHyperlinks-body.tsv,407956,2.01s
-Reddit::soc-redditHyperlinks-title.tsv,2384863,10.57s
+Reddit::soc-redditHyperlinks-body.tsv,211195,1.63s
+Reddit::soc-redditHyperlinks-title.tsv,1103345,7.70s

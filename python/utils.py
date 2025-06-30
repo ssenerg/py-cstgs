@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Tuple
 
+
 UNITS = {
     "microsecond": "μs",
     "millisecond": "ms",
@@ -10,6 +11,7 @@ UNITS = {
 }
 COLOR = "\033[31m"
 RESET = "\033[0m"
+
 
 def time_it(start_time: datetime, msg: str = "{}") -> Tuple[str, int]:
     elapsed = (datetime.now() - start_time).total_seconds() * 1_000_000

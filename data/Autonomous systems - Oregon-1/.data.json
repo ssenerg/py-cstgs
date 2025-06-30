@@ -10,5 +10,8 @@
         "regex_ignore": "^#.*\\n",
         "regex_find": "^(\\d+)\\t(\\d+).*\\n",
         "skip_first_not_ignore": false
+    },
+    "known_triangle_counts": {
+        "oregon1_010331": 17144
     }
 }
