@@ -153,5 +153,8 @@
 ```
 pip install uv
 uv run main.py
+
+# you can use this command additional for help
+uv run main.py --help
 ```
 

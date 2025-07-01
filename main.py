@@ -21,13 +21,13 @@ if __name__ == "__main__":
         default=20
     )
     parser.add_argument(
-        "-e" "--edge-sampling-prob",
+        "-e", "--edge-sampling-prob",
         type=float,
         help="Edge sampling probability",
         default=0.568
     )
     parser.add_argument(
-        "-w" "--wedge-sampling-prob",
+        "-w", "--wedge-sampling-prob",
         type=float,
         help="Wedge sampling probability",
         default=0.8
@@ -35,8 +35,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     res, unknown_res = Triangles(Path(args.data_dir)).run(
         args.processors,
-        args.e__edge_sampling_prob,
-        args.w__wedge_sampling_prob
+        args.edge_sampling_prob,
+        args.wedge_sampling_prob
     )
     pl.Config.set_tbl_rows(-1)
     print(
