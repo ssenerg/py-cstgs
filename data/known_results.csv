@@ -1,5 +1,0 @@
-dataset,triangles,actual_triangles,process_took
-Oregon-1::oregon1_010331.tsv,519,17144,165.71ms
-Reddit::soc-redditHyperlinks-body.tsv,406010,406391,484.48ms
-Caida::as-caida20060102.tsv,3004,30433,720.61ms
-Caida::as-caida20070101.tsv,4305,40475,986.08ms
