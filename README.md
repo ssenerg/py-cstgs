@@ -312,6 +312,11 @@
 
 ---
 
+- **Used data is accessible via these links**
+  - ```
+      https://snap.stanford.edu/data/as-Caida.html
+      https://snap.stanford.edu/data/soc-RedditHyperlinks.html
+      https://snap.stanford.edu/data/Oregon-1.html
 - **This instructions assumes that python and pip are already installed one your system.**
   - ```
       pip install uv
