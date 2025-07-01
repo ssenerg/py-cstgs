@@ -1,12 +1,14 @@
 # Counting and Sampling Triangles from a Graph Stream
 
 ## Algorithm's Scientific Paper
-- https://www.vldb.org/pvldb/vol6/p1870-aduri.pdf
 
+- https://www.vldb.org/pvldb/vol6/p1870-aduri.pdf
 ---
 
 ## Results 
+
 ### 64 Processors
+
 ```
 ┌─────────────────────────────────┬───────────┬──────────────┐
 │ dataset                         ┆ triangles ┆ process_took │
@@ -148,7 +150,9 @@
 │ Caida::as-caida20070326.tsv     ┆ 178       ┆ 461.07ms     │
 └─────────────────────────────────┴───────────┴──────────────┘ 
 ```
+
 ### 12 Processors
+
 ```
 ┌─────────────────────────────────┬───────────┬──────────────┐
 │ dataset                         ┆ triangles ┆ process_took │
@@ -290,7 +294,9 @@
 │ Reddit::soc-redditHyperlinks-t… ┆ 2368752   ┆ 2.34s        │
 └─────────────────────────────────┴───────────┴──────────────┘
 ```
-### 2 Processors - Best results
+
+### 2 Processors - Best Estimation
+
 ```
 
 ┌─────────────────────────────────┬───────────┬──────────────────┬──────────────┐
@@ -304,7 +310,6 @@
 │ Reddit::soc-redditHyperlinks-b… ┆ 5800025   ┆ 406391           ┆ 16.55s       │
 └─────────────────────────────────┴───────────┴──────────────────┴──────────────┘
 ```
-
 ---
 
 ## How to use
@@ -335,8 +340,6 @@
 
 ### Notes
 
-- Increasing processor numbers means less **triangles count** and **less run time**.
-
-- Increasing edge and wedge sampling probability makes number of triangles more.
-
+- Increasing processor numbers means **less triangles count** and **less runtime**.
+- Increasing edge and wedge sampling probability means **more triangles count** and **more runtime** .
 ---
