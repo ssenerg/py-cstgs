@@ -5,7 +5,8 @@
 
 ---
 
-## Results ( 12 processors )
+## Results 
+### 12 processors
 ```
 ┌─────────────────────────────────┬───────────┬──────────────┐
 │ dataset                         ┆ triangles ┆ process_took │
@@ -151,11 +152,29 @@
 ---
 
 ### How to use
-```
-pip install uv
-uv run main.py
+- **This instructions assumes that python and pip are already installed one your system.**
+  - ```
+      pip install uv
+      uv run main.py -d data
+- **More Help**
+    - ```
+      Counting and Sampling Triangles from a Graph Stream
+    
+        options:
+        -d, --data-dir            :: Path to the data directory
+                                     default: data
+        -p, --processors          :: Number of processors to use
+                                     default: 12
+        -e, --edge-sampling-prob  :: Edge sampling probability
+                                     default: 0.568
+        -w, --wedge-sampling-prob :: Wedge sampling probability
+                                     default: 0.8
+---
 
-# you can use this command additional for help
-uv run main.py --help
-```
+### Notes
 
+- Increasing processor numbers means less **triangles count** and **less run time**.
+
+- Increasing edge and wedge sampling probability makes number of triangles more.
+
+---
