@@ -1,14 +1,11 @@
 # Counting and Sampling Triangles from a Graph Stream
 
----
-
 ## Algorithm's Scientific Paper
 - https://www.vldb.org/pvldb/vol6/p1870-aduri.pdf
 
 ---
 
 ## Results 
----
 ### 64 Processors
 ```
 ┌─────────────────────────────────┬───────────┬──────────────┐
@@ -311,8 +308,6 @@
 ---
 
 ## How to use
-
----
 
 - **Used data is accessible via these links**
   - ```
