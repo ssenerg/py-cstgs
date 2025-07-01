@@ -1,3 +1,3 @@
 dataset,triangles,actual_triangles,process_took
-Caida::as-caida20060102.tsv,1637,30433,499.23ms
-Caida::as-caida20070101.tsv,2258,40475,748.60ms
+Caida::as-caida20060102.tsv,3004,30433,720.61ms
+Caida::as-caida20070101.tsv,4305,40475,986.08ms

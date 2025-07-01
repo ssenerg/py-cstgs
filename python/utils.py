@@ -7,7 +7,7 @@ UNITS = {
     "millisecond": "ms",
     "second": "s",
     "minute": "m",
-    "hour": "h"
+    "hour": "h",
 }
 COLOR = "\033[31m"
 RESET = "\033[0m"

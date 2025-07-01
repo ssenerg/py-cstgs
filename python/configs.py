@@ -19,21 +19,21 @@ class RootConfig(BaseModel):
         for path_str in folders:
             dataset_dir = data_dir / path_str
             if not dataset_dir.exists():
-                raise ValueError(f"Dataset folder not found: \"{dataset_dir}\"")
+                raise ValueError(f'Dataset folder not found: "{dataset_dir}"')
             result.append(dataset_dir)
         return result
 
     @classmethod
     def load(cls, data_dir: Path) -> "RootConfig":
         if not data_dir.exists():
-            raise ValueError(f"Data folder not found: \"{data_dir}\"")
+            raise ValueError(f'Data folder not found: "{data_dir}"')
         file = data_dir / ".root.json"
         if not file.exists():
-            raise FileNotFoundError(f"Data config file not found: \"{str(file)}\"")
-        
-        with open(file, 'r') as f:
+            raise FileNotFoundError(f'Data config file not found: "{str(file)}"')
+
+        with open(file, "r") as f:
             data = load(f)
-        
+
         return cls.model_validate(data, context={"data_dir": data_dir})
 
 
@@ -57,12 +57,14 @@ class DataConfigFolders(BaseModel):
     @classmethod
     def validate_raw(cls, raw_path: Path, info: ValidationInfo) -> Path:
         if not raw_path.exists():
-            raise ValueError(f"Raw folder not found: \"{raw_path}\"")
+            raise ValueError(f'Raw folder not found: "{raw_path}"')
         if not info.context or "extensions" not in info.context:
             raise ValueError("extensions must be provided in the context")
         extension = info.context["extensions"]
         if not any(raw_path.glob(f"*{extension}")):
-            raise ValueError(f"No files with extension '{extension}' found in raw folder: \"{raw_path}\"")
+            raise ValueError(
+                f"No files with extension '{extension}' found in raw folder: \"{raw_path}\""
+            )
         return raw_path
 
     @field_validator("processed")
@@ -94,7 +96,9 @@ class DataConfigFormat(BaseModel):
         if "." in extensions[1:] or " " in extensions:
             raise ValueError("Extension must not contain additional dots or whitespace")
         if not extensions[1:].isascii():
-            raise ValueError("Extension must contain only ASCII characters after the dot")
+            raise ValueError(
+                "Extension must contain only ASCII characters after the dot"
+            )
         return extensions
 
     @field_validator("regex_ignore")
@@ -138,26 +142,30 @@ class DataConfig(BaseModel):
 
         for dataset_name, count in self.known_triangle_counts.items():
             if count < 0:
-                raise ValueError(f"Triangle count for {dataset_name} must be non-negative")
-            
+                raise ValueError(
+                    f"Triangle count for {dataset_name} must be non-negative"
+                )
+
             dataset_file = raw_folder / f"{dataset_name}{extension}"
             if not dataset_file.exists():
-                raise ValueError(f"Dataset file not found for {dataset_name}: \"{dataset_file}\"")
+                raise ValueError(
+                    f'Dataset file not found for {dataset_name}: "{dataset_file}"'
+                )
         return self
 
     @classmethod
     def load(cls, dataset_dir: Path) -> "DataConfig":
         if not dataset_dir.exists():
-            raise ValueError(f"Dataset folder not found: \"{dataset_dir}\"")
+            raise ValueError(f'Dataset folder not found: "{dataset_dir}"')
         file = dataset_dir / ".data.json"
         if not file.exists():
-            raise FileNotFoundError(f"Dataset config file not found: \"{str(file)}\"")
+            raise FileNotFoundError(f'Dataset config file not found: "{str(file)}"')
 
-        with open(file, 'r') as f:
+        with open(file, "r") as f:
             data = load(f)
 
         context = {
             "dataset_dir": dataset_dir,
-            "extensions": data.get("format", {}).get("extensions", "")
+            "extensions": data.get("format", {}).get("extensions", ""),
         }
         return cls.model_validate(data, context=context)
