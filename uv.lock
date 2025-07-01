@@ -22,13 +22,13 @@ wheels = [
 
 [[package]]
 name = "cstgs"
-version = "0.1.5"
+version = "0.1.6"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/26/43/0f6065595aca8f2bedd14d9c01ec9e84dd4af626788abe391ba50b1a27aa/cstgs-0.1.5.tar.gz", hash = "sha256:2875d4337b61963fbddb818449615b977007805fd040bc910e5f2a5e56c78bb6", size = 14719, upload-time = "2025-07-01T15:19:26.254Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/34/29/437d53745a310e532056c890a6322dda8f117d1a2e16b4d36333088fdcb9/cstgs-0.1.6.tar.gz", hash = "sha256:5e6d4e649505045812cc8ff99f133188f1129a7b4584fb02f7a4bccb797df1fb", size = 14875, upload-time = "2025-07-01T15:42:04.231Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/29/e0/66b494e9248c28a3b9e3177dc932158b1b1ba23bdfc37f66d37a734e99a3/cstgs-0.1.5-cp38-abi3-macosx_10_12_x86_64.whl", hash = "sha256:d5dab4a59b7fbfb040415740256a9ae2fa2b2531490a849cb797183fc9024da1", size = 282460, upload-time = "2025-07-01T15:19:22.763Z" },
-    { url = "https://files.pythonhosted.org/packages/3c/e1/af23a821f5643f0fdedcae386f6a2029ae90c6afd718db967bf64d2b034e/cstgs-0.1.5-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:0349410f3ca6e6fd7c951337847fc9eb5f3ad2d9f96c374cb3cb34c113d97d37", size = 319308, upload-time = "2025-07-01T15:19:24.086Z" },
-    { url = "https://files.pythonhosted.org/packages/9f/24/37e9d39628dba0ce7eef1261f9ffde014dd3541f2f619e7c992c8f247609/cstgs-0.1.5-cp38-abi3-win_amd64.whl", hash = "sha256:00c0de5a21203f3f69d995bc9b3f521d46c7cd5c40a4ec8a13c9826abf555b43", size = 163951, upload-time = "2025-07-01T15:19:25.277Z" },
+    { url = "https://files.pythonhosted.org/packages/50/16/c1b64715e92614f75003d6c319c2f860a8235c8ebc7e37d9b623afbcacd0/cstgs-0.1.6-cp38-abi3-macosx_10_12_x86_64.whl", hash = "sha256:688f70e2d814a9c5bdce75aa24381c92e8a40d6cad4bdb1597bd120827760669", size = 282379, upload-time = "2025-07-01T15:42:00.606Z" },
+    { url = "https://files.pythonhosted.org/packages/8f/b7/22bfea3f83e0ea621218401955add0f7da8303fecbdfcf7261d85af7b6cf/cstgs-0.1.6-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:5160c74d20367f29ba29447d549d1d11ce13bed6fcb039316ff76cd6b68e35b3", size = 319347, upload-time = "2025-07-01T15:42:01.886Z" },
+    { url = "https://files.pythonhosted.org/packages/e1/b7/d1f261d89412acb15ee98401d66971e1d58fe5a7a74a5a0277671f1c2645/cstgs-0.1.6-cp38-abi3-win_amd64.whl", hash = "sha256:e57df19ad26eea0d5dec7f60ab66f2b087dd2154830e687065c708bb292a2b87", size = 164068, upload-time = "2025-07-01T15:42:03.122Z" },
 ]
 
 [[package]]
@@ -47,7 +47,7 @@ wheels = [
 
 [[package]]
 name = "py-cstgs"
-version = "0.1.5"
+version = "0.1.6"
 source = { virtual = "." }
 dependencies = [
     { name = "cstgs" },
@@ -58,7 +58,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "cstgs", specifier = ">=0.1.5" },
+    { name = "cstgs", specifier = ">=0.1.6" },
     { name = "polars", specifier = ">=1.31.0" },
     { name = "pydantic", specifier = ">=2.11.7" },
     { name = "tqdm", specifier = ">=4.67.1" },
